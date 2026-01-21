@@ -107,9 +107,9 @@ async function setChannelPermission(channelId, roleId, allow, options = {}) {
       let message;
 
       if (allow && customOpenMessage) {
-        message = customOpenMessage.replace('{ruolo}', `${role}`);
+        message = customOpenMessage.replace('{ruolo}', `${role}`).replace(/\\n/g, '\n');
       } else if (!allow && customCloseMessage) {
-        message = customCloseMessage.replace('{ruolo}', `${role}`);
+        message = customCloseMessage.replace('{ruolo}', `${role}`).replace(/\\n/g, '\n');
       } else {
         const emoji = allow ? '🔓' : '🔒';
         message = allow
