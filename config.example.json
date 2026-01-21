@@ -1,0 +1,42 @@
+{
+  "token": "IL_TUO_BOT_TOKEN_QUI",
+  "guildId": "ID_DEL_TUO_SERVER",
+  "schedules": [
+    {
+      "id": "esempio-chat-generale",
+      "channelId": "123456789012345678",
+      "roleId": "123456789012345678",
+      "enabled": true,
+      "rules": [
+        {
+          "action": "deny",
+          "cron": "0 22 * * *",
+          "description": "Blocca alle 22:00 ogni giorno"
+        },
+        {
+          "action": "allow",
+          "cron": "0 8 * * *",
+          "description": "Sblocca alle 08:00 ogni giorno"
+        }
+      ]
+    },
+    {
+      "id": "esempio-weekend",
+      "channelId": "123456789012345678",
+      "roleId": "123456789012345678",
+      "enabled": true,
+      "rules": [
+        {
+          "action": "deny",
+          "cron": "0 0 * * 6",
+          "description": "Blocca a mezzanotte di sabato"
+        },
+        {
+          "action": "allow",
+          "cron": "0 0 * * 1",
+          "description": "Sblocca a mezzanotte di lunedi"
+        }
+      ]
+    }
+  ]
+}
