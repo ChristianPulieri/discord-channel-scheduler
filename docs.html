@@ -6,20 +6,21 @@
   <title>Discord Channel Scheduler - Documentazione</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-deep: #0a0908;
-      --bg-card: #141210;
-      --bg-card-hover: #1a1714;
-      --ember-dim: #3d2914;
-      --ember: #c45d1a;
-      --ember-bright: #ff7b29;
-      --ember-glow: #ffaa5c;
-      --ash: #8a8178;
-      --smoke: #b8b0a4;
-      --bone: #e8e2d9;
-      --chalk: #f5f2ed;
+      --bg-deep: #0a0b14;
+      --bg-card: #12245B;
+      --bg-card-hover: #1a2d6b;
+      --viola-scuro: #3B226B;
+      --viola-2: #565089;
+      --viola-3: #7786AC;
+      --acquamarina: #BFFFFB;
+      --acquamarina-2: #A3D1DD;
+      --blu-scuro: #12245B;
+      --white: #ffffff;
+      --white-soft: #e8eaf0;
+      --white-dim: #a0a8c0;
     }
 
     * {
@@ -33,15 +34,15 @@
     }
 
     body {
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       background: var(--bg-deep);
-      color: var(--smoke);
+      color: var(--white-dim);
       line-height: 1.7;
       min-height: 100vh;
       overflow-x: hidden;
     }
 
-    /* Ember particles background */
+    /* Floating particles background */
     .ember-field {
       position: fixed;
       top: 0;
@@ -57,11 +58,11 @@
       position: absolute;
       width: 4px;
       height: 4px;
-      background: var(--ember);
+      background: var(--acquamarina);
       border-radius: 50%;
       opacity: 0;
       animation: float-up 8s ease-in infinite;
-      box-shadow: 0 0 6px var(--ember), 0 0 12px var(--ember-dim);
+      box-shadow: 0 0 6px var(--acquamarina), 0 0 12px var(--viola-3);
     }
 
     @keyframes float-up {
@@ -70,10 +71,10 @@
         transform: translateY(0) scale(1);
       }
       10% {
-        opacity: 0.8;
+        opacity: 0.6;
       }
       90% {
-        opacity: 0.3;
+        opacity: 0.2;
       }
       100% {
         opacity: 0;
@@ -110,29 +111,29 @@
       transform: translateX(-50%);
       width: 600px;
       height: 400px;
-      background: radial-gradient(ellipse at center bottom, rgba(196, 93, 26, 0.15) 0%, transparent 70%);
+      background: radial-gradient(ellipse at center bottom, rgba(191, 255, 251, 0.08) 0%, transparent 70%);
       pointer-events: none;
     }
 
     .logo {
       font-size: 4rem;
       margin-bottom: 24px;
-      animation: flicker 3s ease-in-out infinite;
+      animation: glow-pulse 3s ease-in-out infinite;
     }
 
-    @keyframes flicker {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.85; transform: scale(1.02); }
+    @keyframes glow-pulse {
+      0%, 100% { opacity: 1; transform: scale(1); filter: drop-shadow(0 0 8px var(--acquamarina)); }
+      50% { opacity: 0.9; transform: scale(1.02); filter: drop-shadow(0 0 16px var(--acquamarina)); }
     }
 
     .hero h1 {
-      font-family: 'Crimson Pro', serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: clamp(2.5rem, 6vw, 4.5rem);
-      font-weight: 600;
-      color: var(--chalk);
+      font-weight: 700;
+      color: var(--white);
       letter-spacing: -0.02em;
       margin-bottom: 16px;
-      background: linear-gradient(135deg, var(--chalk) 0%, var(--ember-glow) 100%);
+      background: linear-gradient(135deg, var(--white) 0%, var(--acquamarina) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -141,7 +142,7 @@
     .hero p {
       font-size: 1.25rem;
       font-weight: 300;
-      color: var(--ash);
+      color: var(--viola-3);
       max-width: 500px;
       margin-bottom: 48px;
     }
@@ -155,10 +156,10 @@
 
     .nav-link {
       padding: 12px 24px;
-      background: var(--bg-card);
-      border: 1px solid var(--ember-dim);
+      background: var(--viola-scuro);
+      border: 1px solid var(--viola-2);
       border-radius: 8px;
-      color: var(--smoke);
+      color: var(--white-soft);
       text-decoration: none;
       font-size: 0.9rem;
       font-weight: 500;
@@ -166,17 +167,17 @@
     }
 
     .nav-link:hover {
-      background: var(--ember-dim);
-      border-color: var(--ember);
-      color: var(--chalk);
+      background: var(--viola-2);
+      border-color: var(--acquamarina);
+      color: var(--white);
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(196, 93, 26, 0.2);
+      box-shadow: 0 8px 24px rgba(191, 255, 251, 0.15);
     }
 
     /* Section styling */
     section {
       padding: 80px 0;
-      border-top: 1px solid rgba(196, 93, 26, 0.1);
+      border-top: 1px solid rgba(191, 255, 251, 0.1);
     }
 
     .section-header {
@@ -188,28 +189,28 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.75rem;
       font-weight: 500;
-      color: var(--ember);
+      color: var(--acquamarina);
       text-transform: uppercase;
       letter-spacing: 0.15em;
       margin-bottom: 12px;
       padding: 6px 12px;
-      background: rgba(196, 93, 26, 0.1);
+      background: rgba(191, 255, 251, 0.1);
       border-radius: 4px;
     }
 
     h2 {
-      font-family: 'Crimson Pro', serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 600;
-      color: var(--chalk);
+      font-weight: 700;
+      color: var(--white);
       letter-spacing: -0.01em;
     }
 
     h3 {
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: 1.5rem;
       font-weight: 600;
-      color: var(--bone);
+      color: var(--white-soft);
       margin-bottom: 16px;
     }
 
@@ -221,7 +222,7 @@
 
     .command-card {
       background: var(--bg-card);
-      border: 1px solid rgba(196, 93, 26, 0.15);
+      border: 1px solid rgba(191, 255, 251, 0.15);
       border-radius: 16px;
       padding: 32px;
       transition: all 0.4s ease;
@@ -236,16 +237,16 @@
       left: 0;
       right: 0;
       height: 3px;
-      background: linear-gradient(90deg, var(--ember), var(--ember-bright), var(--ember));
+      background: linear-gradient(90deg, var(--viola-scuro), var(--acquamarina), var(--viola-scuro));
       opacity: 0;
       transition: opacity 0.3s ease;
     }
 
     .command-card:hover {
       background: var(--bg-card-hover);
-      border-color: rgba(196, 93, 26, 0.3);
+      border-color: rgba(191, 255, 251, 0.3);
       transform: translateY(-4px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 60px rgba(196, 93, 26, 0.1);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 60px rgba(191, 255, 251, 0.08);
     }
 
     .command-card:hover::before {
@@ -256,12 +257,12 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 1.25rem;
       font-weight: 500;
-      color: var(--ember-bright);
+      color: var(--acquamarina);
       margin-bottom: 8px;
     }
 
     .command-desc {
-      color: var(--ash);
+      color: var(--viola-3);
       margin-bottom: 24px;
       font-weight: 300;
     }
@@ -277,10 +278,10 @@
     .param-table th {
       text-align: left;
       padding: 12px 16px;
-      background: rgba(196, 93, 26, 0.08);
-      color: var(--bone);
+      background: rgba(191, 255, 251, 0.05);
+      color: var(--white-soft);
       font-weight: 500;
-      border-bottom: 1px solid var(--ember-dim);
+      border-bottom: 1px solid var(--viola-2);
     }
 
     .param-table th:first-child {
@@ -293,8 +294,8 @@
 
     .param-table td {
       padding: 12px 16px;
-      border-bottom: 1px solid rgba(196, 93, 26, 0.1);
-      color: var(--smoke);
+      border-bottom: 1px solid rgba(191, 255, 251, 0.1);
+      color: var(--white-dim);
     }
 
     .param-table tr:last-child td {
@@ -303,25 +304,25 @@
 
     .param-table code {
       font-family: 'JetBrains Mono', monospace;
-      color: var(--ember-glow);
-      background: rgba(196, 93, 26, 0.1);
+      color: var(--acquamarina);
+      background: rgba(191, 255, 251, 0.1);
       padding: 2px 8px;
       border-radius: 4px;
       font-size: 0.85em;
     }
 
     .required {
-      color: var(--ember-bright);
+      color: var(--acquamarina);
     }
 
     .optional {
-      color: var(--ash);
+      color: var(--viola-3);
     }
 
     /* Code blocks */
     .code-block {
-      background: #0d0b0a;
-      border: 1px solid var(--ember-dim);
+      background: #080a12;
+      border: 1px solid var(--viola-2);
       border-radius: 12px;
       padding: 20px 24px;
       margin: 16px 0;
@@ -337,7 +338,7 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.65rem;
       font-weight: 500;
-      color: var(--ember);
+      color: var(--acquamarina);
       background: var(--bg-deep);
       padding: 2px 8px;
       letter-spacing: 0.1em;
@@ -346,20 +347,20 @@
     .code-block code {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.9rem;
-      color: var(--bone);
+      color: var(--white-soft);
       line-height: 1.8;
     }
 
     .code-block .cmd {
-      color: var(--ember-bright);
+      color: var(--acquamarina);
     }
 
     .code-block .param {
-      color: var(--ash);
+      color: var(--viola-3);
     }
 
     .code-block .value {
-      color: var(--ember-glow);
+      color: var(--acquamarina-2);
     }
 
     /* Feature list */
@@ -376,12 +377,12 @@
       padding: 24px;
       background: var(--bg-card);
       border-radius: 12px;
-      border: 1px solid rgba(196, 93, 26, 0.1);
+      border: 1px solid rgba(191, 255, 251, 0.1);
       transition: all 0.3s ease;
     }
 
     .feature:hover {
-      border-color: rgba(196, 93, 26, 0.25);
+      border-color: rgba(191, 255, 251, 0.25);
       transform: translateX(4px);
     }
 
@@ -391,14 +392,14 @@
     }
 
     .feature h4 {
-      color: var(--bone);
+      color: var(--white-soft);
       font-weight: 500;
       margin-bottom: 4px;
     }
 
     .feature p {
       font-size: 0.9rem;
-      color: var(--ash);
+      color: var(--viola-3);
       font-weight: 300;
     }
 
@@ -411,7 +412,7 @@
       position: relative;
       padding-left: 80px;
       padding-bottom: 48px;
-      border-left: 2px solid var(--ember-dim);
+      border-left: 2px solid var(--viola-2);
       margin-left: 24px;
     }
 
@@ -429,26 +430,26 @@
       width: 40px;
       height: 40px;
       background: var(--bg-deep);
-      border: 2px solid var(--ember);
+      border: 2px solid var(--acquamarina);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Crimson Pro', serif;
+      font-family: 'Montserrat', sans-serif;
       font-size: 1.25rem;
       font-weight: 600;
-      color: var(--ember-bright);
+      color: var(--acquamarina);
     }
 
     .step h4 {
-      color: var(--chalk);
+      color: var(--white);
       font-size: 1.1rem;
       font-weight: 500;
       margin-bottom: 12px;
     }
 
     .step p {
-      color: var(--ash);
+      color: var(--viola-3);
       margin-bottom: 16px;
     }
 
@@ -461,21 +462,21 @@
     }
 
     .var-card {
-      background: linear-gradient(135deg, var(--bg-card) 0%, rgba(196, 93, 26, 0.05) 100%);
-      border: 1px solid var(--ember-dim);
+      background: linear-gradient(135deg, var(--bg-card) 0%, rgba(191, 255, 251, 0.03) 100%);
+      border: 1px solid var(--viola-2);
       border-radius: 12px;
       padding: 24px;
     }
 
     .var-card h4 {
       font-family: 'JetBrains Mono', monospace;
-      color: var(--ember-glow);
+      color: var(--acquamarina);
       font-size: 1rem;
       margin-bottom: 8px;
     }
 
     .var-card p {
-      color: var(--ash);
+      color: var(--viola-3);
       font-size: 0.9rem;
     }
 
@@ -485,13 +486,13 @@
       border-radius: 12px;
       margin-bottom: 16px;
       overflow: hidden;
-      border: 1px solid rgba(196, 93, 26, 0.1);
+      border: 1px solid rgba(191, 255, 251, 0.1);
     }
 
     .trouble-problem {
       padding: 20px 24px;
-      background: rgba(196, 93, 26, 0.05);
-      color: var(--bone);
+      background: rgba(191, 255, 251, 0.05);
+      color: var(--white-soft);
       font-weight: 500;
       display: flex;
       align-items: center;
@@ -500,12 +501,12 @@
 
     .trouble-problem::before {
       content: '⚠';
-      color: var(--ember);
+      color: var(--acquamarina);
     }
 
     .trouble-solution {
       padding: 20px 24px;
-      color: var(--smoke);
+      color: var(--white-dim);
       font-weight: 300;
     }
 
@@ -513,13 +514,13 @@
     footer {
       text-align: center;
       padding: 60px 0;
-      border-top: 1px solid rgba(196, 93, 26, 0.1);
-      color: var(--ash);
+      border-top: 1px solid rgba(191, 255, 251, 0.1);
+      color: var(--viola-3);
       font-size: 0.9rem;
     }
 
     footer a {
-      color: var(--ember-bright);
+      color: var(--acquamarina);
       text-decoration: none;
     }
 
@@ -537,12 +538,12 @@
     }
 
     ::-webkit-scrollbar-thumb {
-      background: var(--ember-dim);
+      background: var(--viola-2);
       border-radius: 4px;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-      background: var(--ember);
+      background: var(--acquamarina);
     }
 
     /* Animations on scroll */
@@ -746,7 +747,7 @@
           </table>
 
           <p style="margin-top: 16px; font-size: 0.9rem;">
-            <strong style="color: var(--ember-glow);">Variabili:</strong>
+            <strong style="color: var(--acquamarina);">Variabili:</strong>
             <code>{ruolo}</code> menziona il ruolo, <code>\n</code> va a capo
           </p>
 
@@ -860,8 +861,8 @@
         <h2>Setup Completo</h2>
       </div>
 
-      <p class="fade-in" style="color: var(--ash); margin-bottom: 40px; font-size: 1.1rem;">
-        Esempio: canale <strong style="color: var(--ember-glow)">#🔥-falò-dei-guardiani</strong> aperto dalle 14:00 alle 20:00, dal lunedì al venerdì.
+      <p class="fade-in" style="color: var(--viola-3); margin-bottom: 40px; font-size: 1.1rem;">
+        Esempio: canale <strong style="color: var(--acquamarina)">#🔥-falò-dei-guardiani</strong> aperto dalle 14:00 alle 20:00, dal lunedì al venerdì.
       </p>
 
       <div class="steps">
