@@ -73,7 +73,7 @@ function reloadConfig() {
 }
 
 // Funzione per modificare i permessi del canale
-async function setChannelPermission(channelId, roleId, allow) {
+async function setChannelPermission(channelId, roleId, allow, sendMessage = true) {
   try {
     const guild = client.guilds.cache.get(config.guildId);
     if (!guild) {
@@ -99,6 +99,17 @@ async function setChannelPermission(channelId, roleId, allow) {
 
     const action = allow ? 'ABILITATO' : 'DISABILITATO';
     console.log(`[${new Date().toISOString()}] ${action} invio messaggi per ruolo "${role.name}" nel canale "#${channel.name}"`);
+
+    // Invia messaggio nel canale
+    if (sendMessage) {
+      const emoji = allow ? '🔓' : '🔒';
+      const message = allow
+        ? `${emoji} **Il canale è ora aperto!** I ${role} possono scrivere.`
+        : `${emoji} **Il canale è ora chiuso.** I ${role} non possono più scrivere.`;
+
+      await channel.send(message);
+    }
+
     return true;
   } catch (error) {
     console.error('Errore nel modificare i permessi:', error);
