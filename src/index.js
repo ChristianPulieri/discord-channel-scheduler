@@ -3,9 +3,36 @@ const cron = require('node-cron');
 const fs = require('fs');
 const path = require('path');
 
-// Carica configurazione
-const configPath = path.join(__dirname, '..', 'config.json');
-let config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+// Configurazione da variabili d'ambiente
+const TOKEN = process.env.TOKEN;
+const GUILD_ID = process.env.GUILD_ID;
+
+if (!TOKEN || !GUILD_ID) {
+  console.error('Errore: TOKEN e GUILD_ID sono richiesti!');
+  console.error('Imposta le variabili d\'ambiente TOKEN e GUILD_ID');
+  process.exit(1);
+}
+
+// File per salvare le schedules (persistente)
+const schedulesPath = path.join(__dirname, '..', 'schedules.json');
+
+// Carica o inizializza schedules
+let schedules = [];
+if (fs.existsSync(schedulesPath)) {
+  try {
+    schedules = JSON.parse(fs.readFileSync(schedulesPath, 'utf8'));
+  } catch (e) {
+    console.log('Creazione nuovo file schedules.json');
+    schedules = [];
+  }
+}
+
+// Oggetto config per compatibilità con i comandi
+const config = {
+  token: TOKEN,
+  guildId: GUILD_ID,
+  schedules: schedules
+};
 
 // Inizializza client Discord
 const client = new Client({
@@ -32,14 +59,16 @@ for (const file of commandFiles) {
 // Mappa per tenere traccia dei job cron attivi
 const cronJobs = new Map();
 
-// Funzione per salvare la configurazione
+// Funzione per salvare le schedules
 function saveConfig() {
-  fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
+  fs.writeFileSync(schedulesPath, JSON.stringify(config.schedules, null, 2));
 }
 
-// Funzione per ricaricare la configurazione
+// Funzione per ricaricare le schedules
 function reloadConfig() {
-  config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+  if (fs.existsSync(schedulesPath)) {
+    config.schedules = JSON.parse(fs.readFileSync(schedulesPath, 'utf8'));
+  }
   return config;
 }
 
