@@ -23,15 +23,24 @@ module.exports = {
         ))
     .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
 
-  async execute(interaction, { setChannelPermission }) {
+  async execute(interaction, { config, setChannelPermission }) {
     const channel = interaction.options.getChannel('canale');
     const role = interaction.options.getRole('ruolo');
     const action = interaction.options.getString('azione');
 
     await interaction.deferReply({ ephemeral: true });
 
+    // Cerca messaggi personalizzati dalla schedule
+    const schedule = config.schedules.find(
+      s => s.channelId === channel.id && s.roleId === role.id
+    );
+
     const allow = action === 'allow';
-    const success = await setChannelPermission(channel.id, role.id, allow);
+    const success = await setChannelPermission(channel.id, role.id, allow, {
+      sendMessage: true,
+      customOpenMessage: schedule?.openMessage,
+      customCloseMessage: schedule?.closeMessage
+    });
 
     if (success) {
       await interaction.editReply({

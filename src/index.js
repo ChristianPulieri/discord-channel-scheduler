@@ -73,7 +73,9 @@ function reloadConfig() {
 }
 
 // Funzione per modificare i permessi del canale
-async function setChannelPermission(channelId, roleId, allow, sendMessage = true) {
+async function setChannelPermission(channelId, roleId, allow, options = {}) {
+  const { sendMessage = true, customOpenMessage = null, customCloseMessage = null } = options;
+
   try {
     const guild = client.guilds.cache.get(config.guildId);
     if (!guild) {
@@ -102,10 +104,18 @@ async function setChannelPermission(channelId, roleId, allow, sendMessage = true
 
     // Invia messaggio nel canale
     if (sendMessage) {
-      const emoji = allow ? '🔓' : '🔒';
-      const message = allow
-        ? `${emoji} **Il canale è ora aperto!** I ${role} possono scrivere.`
-        : `${emoji} **Il canale è ora chiuso.** I ${role} non possono più scrivere.`;
+      let message;
+
+      if (allow && customOpenMessage) {
+        message = customOpenMessage.replace('{ruolo}', `${role}`);
+      } else if (!allow && customCloseMessage) {
+        message = customCloseMessage.replace('{ruolo}', `${role}`);
+      } else {
+        const emoji = allow ? '🔓' : '🔒';
+        message = allow
+          ? `${emoji} **Il canale è ora aperto!** I ${role} possono scrivere.`
+          : `${emoji} **Il canale è ora chiuso.** I ${role} non possono più scrivere.`;
+      }
 
       await channel.send(message);
     }
@@ -139,7 +149,11 @@ function startScheduler() {
       const job = cron.schedule(rule.cron, async () => {
         const allow = rule.action === 'allow';
         console.log(`[SCHEDULER] Esecuzione regola: ${rule.description || rule.action}`);
-        await setChannelPermission(schedule.channelId, schedule.roleId, allow);
+        await setChannelPermission(schedule.channelId, schedule.roleId, allow, {
+          sendMessage: true,
+          customOpenMessage: schedule.openMessage,
+          customCloseMessage: schedule.closeMessage
+        });
       }, {
         timezone: 'Europe/Rome'
       });
