@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discord Channel Scheduler - Documentazione</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #0a0908;
+      --bg-card: #141210;
+      --bg-card-hover: #1a1714;
+      --ember-dim: #3d2914;
+      --ember: #c45d1a;
+      --ember-bright: #ff7b29;
+      --ember-glow: #ffaa5c;
+      --ash: #8a8178;
+      --smoke: #b8b0a4;
+      --bone: #e8e2d9;
+      --chalk: #f5f2ed;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg-deep);
+      color: var(--smoke);
+      line-height: 1.7;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Ember particles background */
+    .ember-field {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .ember-particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--ember);
+      border-radius: 50%;
+      opacity: 0;
+      animation: float-up 8s ease-in infinite;
+      box-shadow: 0 0 6px var(--ember), 0 0 12px var(--ember-dim);
+    }
+
+    @keyframes float-up {
+      0% {
+        opacity: 0;
+        transform: translateY(0) scale(1);
+      }
+      10% {
+        opacity: 0.8;
+      }
+      90% {
+        opacity: 0.3;
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-100vh) scale(0.3);
+      }
+    }
+
+    /* Main container */
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 80px 0;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse at center bottom, rgba(196, 93, 26, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .logo {
+      font-size: 4rem;
+      margin-bottom: 24px;
+      animation: flicker 3s ease-in-out infinite;
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.85; transform: scale(1.02); }
+    }
+
+    .hero h1 {
+      font-family: 'Crimson Pro', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 600;
+      color: var(--chalk);
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--chalk) 0%, var(--ember-glow) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      font-weight: 300;
+      color: var(--ash);
+      max-width: 500px;
+      margin-bottom: 48px;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .nav-link {
+      padding: 12px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--ember-dim);
+      border-radius: 8px;
+      color: var(--smoke);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+      background: var(--ember-dim);
+      border-color: var(--ember);
+      color: var(--chalk);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(196, 93, 26, 0.2);
+    }
+
+    /* Section styling */
+    section {
+      padding: 80px 0;
+      border-top: 1px solid rgba(196, 93, 26, 0.1);
+    }
+
+    .section-header {
+      margin-bottom: 48px;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--ember);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: 12px;
+      padding: 6px 12px;
+      background: rgba(196, 93, 26, 0.1);
+      border-radius: 4px;
+    }
+
+    h2 {
+      font-family: 'Crimson Pro', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600;
+      color: var(--chalk);
+      letter-spacing: -0.01em;
+    }
+
+    h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--bone);
+      margin-bottom: 16px;
+    }
+
+    /* Command Cards */
+    .commands-grid {
+      display: grid;
+      gap: 24px;
+    }
+
+    .command-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(196, 93, 26, 0.15);
+      border-radius: 16px;
+      padding: 32px;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .command-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--ember), var(--ember-bright), var(--ember));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .command-card:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(196, 93, 26, 0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 60px rgba(196, 93, 26, 0.1);
+    }
+
+    .command-card:hover::before {
+      opacity: 1;
+    }
+
+    .command-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--ember-bright);
+      margin-bottom: 8px;
+    }
+
+    .command-desc {
+      color: var(--ash);
+      margin-bottom: 24px;
+      font-weight: 300;
+    }
+
+    /* Parameter Table */
+    .param-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 0.9rem;
+    }
+
+    .param-table th {
+      text-align: left;
+      padding: 12px 16px;
+      background: rgba(196, 93, 26, 0.08);
+      color: var(--bone);
+      font-weight: 500;
+      border-bottom: 1px solid var(--ember-dim);
+    }
+
+    .param-table th:first-child {
+      border-radius: 8px 0 0 0;
+    }
+
+    .param-table th:last-child {
+      border-radius: 0 8px 0 0;
+    }
+
+    .param-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(196, 93, 26, 0.1);
+      color: var(--smoke);
+    }
+
+    .param-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .param-table code {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--ember-glow);
+      background: rgba(196, 93, 26, 0.1);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.85em;
+    }
+
+    .required {
+      color: var(--ember-bright);
+    }
+
+    .optional {
+      color: var(--ash);
+    }
+
+    /* Code blocks */
+    .code-block {
+      background: #0d0b0a;
+      border: 1px solid var(--ember-dim);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 16px 0;
+      overflow-x: auto;
+      position: relative;
+    }
+
+    .code-block::before {
+      content: 'COMANDO';
+      position: absolute;
+      top: -10px;
+      left: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: var(--ember);
+      background: var(--bg-deep);
+      padding: 2px 8px;
+      letter-spacing: 0.1em;
+    }
+
+    .code-block code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--bone);
+      line-height: 1.8;
+    }
+
+    .code-block .cmd {
+      color: var(--ember-bright);
+    }
+
+    .code-block .param {
+      color: var(--ash);
+    }
+
+    .code-block .value {
+      color: var(--ember-glow);
+    }
+
+    /* Feature list */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 32px;
+    }
+
+    .feature {
+      display: flex;
+      gap: 16px;
+      padding: 24px;
+      background: var(--bg-card);
+      border-radius: 12px;
+      border: 1px solid rgba(196, 93, 26, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .feature:hover {
+      border-color: rgba(196, 93, 26, 0.25);
+      transform: translateX(4px);
+    }
+
+    .feature-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .feature h4 {
+      color: var(--bone);
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .feature p {
+      font-size: 0.9rem;
+      color: var(--ash);
+      font-weight: 300;
+    }
+
+    /* Setup steps */
+    .steps {
+      counter-reset: step;
+    }
+
+    .step {
+      position: relative;
+      padding-left: 80px;
+      padding-bottom: 48px;
+      border-left: 2px solid var(--ember-dim);
+      margin-left: 24px;
+    }
+
+    .step:last-child {
+      border-left-color: transparent;
+      padding-bottom: 0;
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: -21px;
+      top: 0;
+      width: 40px;
+      height: 40px;
+      background: var(--bg-deep);
+      border: 2px solid var(--ember);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Crimson Pro', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--ember-bright);
+    }
+
+    .step h4 {
+      color: var(--chalk);
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    .step p {
+      color: var(--ash);
+      margin-bottom: 16px;
+    }
+
+    /* Variables section */
+    .var-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .var-card {
+      background: linear-gradient(135deg, var(--bg-card) 0%, rgba(196, 93, 26, 0.05) 100%);
+      border: 1px solid var(--ember-dim);
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .var-card h4 {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--ember-glow);
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+
+    .var-card p {
+      color: var(--ash);
+      font-size: 0.9rem;
+    }
+
+    /* Troubleshooting */
+    .trouble-item {
+      background: var(--bg-card);
+      border-radius: 12px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(196, 93, 26, 0.1);
+    }
+
+    .trouble-problem {
+      padding: 20px 24px;
+      background: rgba(196, 93, 26, 0.05);
+      color: var(--bone);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .trouble-problem::before {
+      content: '⚠';
+      color: var(--ember);
+    }
+
+    .trouble-solution {
+      padding: 20px 24px;
+      color: var(--smoke);
+      font-weight: 300;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 60px 0;
+      border-top: 1px solid rgba(196, 93, 26, 0.1);
+      color: var(--ash);
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: var(--ember-bright);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-deep);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--ember-dim);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--ember);
+    }
+
+    /* Animations on scroll */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease-out;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero {
+        min-height: 60vh;
+        padding: 60px 0;
+      }
+
+      .logo {
+        font-size: 3rem;
+      }
+
+      .command-card {
+        padding: 24px;
+      }
+
+      .step {
+        padding-left: 60px;
+        margin-left: 16px;
+      }
+
+      .param-table {
+        font-size: 0.8rem;
+      }
+
+      .param-table th,
+      .param-table td {
+        padding: 10px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Ember particles -->
+  <div class="ember-field" id="emberField"></div>
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="container">
+      <div class="logo">🔥</div>
+      <h1>Channel Scheduler</h1>
+      <p>Automazione intelligente per i permessi dei canali Discord. Accendi e spegni il tuo falò quando vuoi.</p>
+      <nav class="nav-links">
+        <a href="#comandi" class="nav-link">Comandi</a>
+        <a href="#setup" class="nav-link">Setup</a>
+        <a href="#variabili" class="nav-link">Variabili</a>
+        <a href="#troubleshooting" class="nav-link">Troubleshooting</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Features -->
+  <section id="features">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">Panoramica</span>
+        <h2>Funzionalità</h2>
+      </div>
+      <div class="features">
+        <div class="feature fade-in">
+          <span class="feature-icon">⏰</span>
+          <div>
+            <h4>Scheduling Automatico</h4>
+            <p>Blocca e sblocca canali ad orari specifici, ogni giorno o solo in certi giorni.</p>
+          </div>
+        </div>
+        <div class="feature fade-in">
+          <span class="feature-icon">📅</span>
+          <div>
+            <h4>Giorni Personalizzati</h4>
+            <p>Imposta regole solo per giorni feriali, weekend, o combinazioni custom.</p>
+          </div>
+        </div>
+        <div class="feature fade-in">
+          <span class="feature-icon">💬</span>
+          <div>
+            <h4>Messaggi Custom</h4>
+            <p>Notifiche personalizzate per ogni canale quando si apre o si chiude.</p>
+          </div>
+        </div>
+        <div class="feature fade-in">
+          <span class="feature-icon">🧪</span>
+          <div>
+            <h4>Test Manuale</h4>
+            <p>Testa le modifiche ai permessi immediatamente senza aspettare.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Commands -->
+  <section id="comandi">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">Riferimento</span>
+        <h2>Comandi</h2>
+      </div>
+
+      <div class="commands-grid">
+        <!-- schedule-add -->
+        <div class="command-card fade-in">
+          <div class="command-name">/schedule-add</div>
+          <p class="command-desc">Aggiunge una regola di scheduling automatico per un canale.</p>
+
+          <table class="param-table">
+            <thead>
+              <tr>
+                <th>Parametro</th>
+                <th>Richiesto</th>
+                <th>Descrizione</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>canale</code></td>
+                <td class="required">✓</td>
+                <td>Il canale da gestire</td>
+              </tr>
+              <tr>
+                <td><code>ruolo</code></td>
+                <td class="required">✓</td>
+                <td>Il ruolo a cui applicare la regola</td>
+              </tr>
+              <tr>
+                <td><code>azione</code></td>
+                <td class="required">✓</td>
+                <td>Sblocca o Blocca</td>
+              </tr>
+              <tr>
+                <td><code>orario</code></td>
+                <td class="required">✓</td>
+                <td>Orario HH:MM (es. 14:00)</td>
+              </tr>
+              <tr>
+                <td><code>giorni</code></td>
+                <td class="optional">—</td>
+                <td>Giorni: * (tutti), 1-5 (lun-ven), 6,0 (weekend)</td>
+              </tr>
+              <tr>
+                <td><code>descrizione</code></td>
+                <td class="optional">—</td>
+                <td>Nota per ricordare la regola</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="code-block">
+            <code><span class="cmd">/schedule-add</span> <span class="param">canale:</span><span class="value">#🔥-falò</span> <span class="param">ruolo:</span><span class="value">@Guardiano</span> <span class="param">azione:</span><span class="value">Sblocca</span> <span class="param">orario:</span><span class="value">14:00</span> <span class="param">giorni:</span><span class="value">1-5</span></code>
+          </div>
+        </div>
+
+        <!-- schedule-message -->
+        <div class="command-card fade-in">
+          <div class="command-name">/schedule-message</div>
+          <p class="command-desc">Imposta messaggi personalizzati per apertura e chiusura del canale.</p>
+
+          <table class="param-table">
+            <thead>
+              <tr>
+                <th>Parametro</th>
+                <th>Richiesto</th>
+                <th>Descrizione</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>canale</code></td>
+                <td class="required">✓</td>
+                <td>Il canale</td>
+              </tr>
+              <tr>
+                <td><code>ruolo</code></td>
+                <td class="required">✓</td>
+                <td>Il ruolo</td>
+              </tr>
+              <tr>
+                <td><code>messaggio_apertura</code></td>
+                <td class="optional">—</td>
+                <td>Messaggio quando si apre</td>
+              </tr>
+              <tr>
+                <td><code>messaggio_chiusura</code></td>
+                <td class="optional">—</td>
+                <td>Messaggio quando si chiude</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p style="margin-top: 16px; font-size: 0.9rem;">
+            <strong style="color: var(--ember-glow);">Variabili:</strong>
+            <code>{ruolo}</code> menziona il ruolo, <code>\n</code> va a capo
+          </p>
+
+          <div class="code-block">
+            <code><span class="cmd">/schedule-message</span> <span class="param">canale:</span><span class="value">#🔥-falò</span> <span class="param">ruolo:</span><span class="value">@Guardiano</span> <span class="param">messaggio_apertura:</span><span class="value">🔥 Il falò è acceso!\nBenvenuti {ruolo}!</span></code>
+          </div>
+        </div>
+
+        <!-- schedule-list -->
+        <div class="command-card fade-in">
+          <div class="command-name">/schedule-list</div>
+          <p class="command-desc">Mostra tutte le schedulazioni configurate sul server.</p>
+
+          <div class="code-block">
+            <code><span class="cmd">/schedule-list</span></code>
+          </div>
+        </div>
+
+        <!-- schedule-remove -->
+        <div class="command-card fade-in">
+          <div class="command-name">/schedule-remove</div>
+          <p class="command-desc">Rimuove una schedulazione o una singola regola.</p>
+
+          <table class="param-table">
+            <thead>
+              <tr>
+                <th>Parametro</th>
+                <th>Richiesto</th>
+                <th>Descrizione</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>canale</code></td>
+                <td class="required">✓</td>
+                <td>Il canale</td>
+              </tr>
+              <tr>
+                <td><code>ruolo</code></td>
+                <td class="required">✓</td>
+                <td>Il ruolo</td>
+              </tr>
+              <tr>
+                <td><code>regola</code></td>
+                <td class="optional">—</td>
+                <td>Numero regola (vuoto = rimuove tutto)</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="code-block">
+            <code><span class="cmd">/schedule-remove</span> <span class="param">canale:</span><span class="value">#🔥-falò</span> <span class="param">ruolo:</span><span class="value">@Guardiano</span> <span class="param">regola:</span><span class="value">1</span></code>
+          </div>
+        </div>
+
+        <!-- schedule-toggle -->
+        <div class="command-card fade-in">
+          <div class="command-name">/schedule-toggle</div>
+          <p class="command-desc">Abilita o disabilita una schedulazione senza eliminarla.</p>
+
+          <div class="code-block">
+            <code><span class="cmd">/schedule-toggle</span> <span class="param">canale:</span><span class="value">#🔥-falò</span> <span class="param">ruolo:</span><span class="value">@Guardiano</span></code>
+          </div>
+        </div>
+
+        <!-- permission-now -->
+        <div class="command-card fade-in">
+          <div class="command-name">/permission-now</div>
+          <p class="command-desc">Modifica i permessi immediatamente, perfetto per testare.</p>
+
+          <table class="param-table">
+            <thead>
+              <tr>
+                <th>Parametro</th>
+                <th>Richiesto</th>
+                <th>Descrizione</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>canale</code></td>
+                <td class="required">✓</td>
+                <td>Il canale da modificare</td>
+              </tr>
+              <tr>
+                <td><code>ruolo</code></td>
+                <td class="required">✓</td>
+                <td>Il ruolo da gestire</td>
+              </tr>
+              <tr>
+                <td><code>azione</code></td>
+                <td class="required">✓</td>
+                <td>Sblocca o Blocca</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="code-block">
+            <code><span class="cmd">/permission-now</span> <span class="param">canale:</span><span class="value">#🔥-falò</span> <span class="param">ruolo:</span><span class="value">@Guardiano</span> <span class="param">azione:</span><span class="value">Sblocca</span></code>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Setup -->
+  <section id="setup">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">Guida</span>
+        <h2>Setup Completo</h2>
+      </div>
+
+      <p class="fade-in" style="color: var(--ash); margin-bottom: 40px; font-size: 1.1rem;">
+        Esempio: canale <strong style="color: var(--ember-glow)">#🔥-falò-dei-guardiani</strong> aperto dalle 14:00 alle 20:00, dal lunedì al venerdì.
+      </p>
+
+      <div class="steps">
+        <div class="step fade-in">
+          <h4>Aggiungi le regole orarie</h4>
+          <p>Crea le regole per aprire e chiudere il canale automaticamente.</p>
+          <div class="code-block">
+            <code><span class="cmd">/schedule-add</span> <span class="param">canale:</span><span class="value">#🔥-falò-dei-guardiani</span> <span class="param">ruolo:</span><span class="value">@Guardiano</span> <span class="param">azione:</span><span class="value">Sblocca</span> <span class="param">orario:</span><span class="value">14:00</span> <span class="param">giorni:</span><span class="value">1-5</span></code>
+          </div>
+          <div class="code-block">
+            <code><span class="cmd">/schedule-add</span> <span class="param">canale:</span><span class="value">#🔥-falò-dei-guardiani</span> <span class="param">ruolo:</span><span class="value">@Guardiano</span> <span class="param">azione:</span><span class="value">Blocca</span> <span class="param">orario:</span><span class="value">20:00</span> <span class="param">giorni:</span><span class="value">1-5</span></code>
+          </div>
+        </div>
+
+        <div class="step fade-in">
+          <h4>Personalizza i messaggi</h4>
+          <p>Imposta messaggi custom che appariranno quando il canale si apre o chiude.</p>
+          <div class="code-block">
+            <code><span class="cmd">/schedule-message</span> <span class="param">canale:</span><span class="value">#🔥-falò-dei-guardiani</span> <span class="param">ruolo:</span><span class="value">@Guardiano</span> <span class="param">messaggio_apertura:</span><span class="value">🔥 **Il falò è acceso!**\nBenvenuti {ruolo}!</span> <span class="param">messaggio_chiusura:</span><span class="value">💤 **Il falò si spegne...**\nA domani!</span></code>
+          </div>
+        </div>
+
+        <div class="step fade-in">
+          <h4>Verifica la configurazione</h4>
+          <p>Controlla che tutto sia impostato correttamente.</p>
+          <div class="code-block">
+            <code><span class="cmd">/schedule-list</span></code>
+          </div>
+        </div>
+
+        <div class="step fade-in">
+          <h4>Testa manualmente</h4>
+          <p>Prova subito se funziona senza aspettare l'orario.</p>
+          <div class="code-block">
+            <code><span class="cmd">/permission-now</span> <span class="param">canale:</span><span class="value">#🔥-falò-dei-guardiani</span> <span class="param">ruolo:</span><span class="value">@Guardiano</span> <span class="param">azione:</span><span class="value">Blocca</span></code>
+          </div>
+          <div class="code-block">
+            <code><span class="cmd">/permission-now</span> <span class="param">canale:</span><span class="value">#🔥-falò-dei-guardiani</span> <span class="param">ruolo:</span><span class="value">@Guardiano</span> <span class="param">azione:</span><span class="value">Sblocca</span></code>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Variables -->
+  <section id="variabili">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">Railway</span>
+        <h2>Variabili d'Ambiente</h2>
+      </div>
+
+      <div class="var-grid">
+        <div class="var-card fade-in">
+          <h4>TOKEN</h4>
+          <p>Il token del bot Discord, ottenuto dal Developer Portal nella sezione Bot.</p>
+        </div>
+        <div class="var-card fade-in">
+          <h4>GUILD_ID</h4>
+          <p>L'ID del server Discord. Clicca destro sul server con modalità sviluppatore attiva.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Troubleshooting -->
+  <section id="troubleshooting">
+    <div class="container">
+      <div class="section-header fade-in">
+        <span class="section-label">Aiuto</span>
+        <h2>Troubleshooting</h2>
+      </div>
+
+      <div class="trouble-item fade-in">
+        <div class="trouble-problem">Bot offline</div>
+        <div class="trouble-solution">Controlla i log su Railway. Verifica che TOKEN e GUILD_ID siano impostati correttamente.</div>
+      </div>
+
+      <div class="trouble-item fade-in">
+        <div class="trouble-problem">Comandi non visibili</div>
+        <div class="trouble-solution">Riavvia il bot per registrare i comandi. Può richiedere qualche minuto per propagarsi su Discord.</div>
+      </div>
+
+      <div class="trouble-item fade-in">
+        <div class="trouble-problem">Permessi non cambiano</div>
+        <div class="trouble-solution">Il ruolo del bot deve essere più alto del ruolo da gestire nella gerarchia del server.</div>
+      </div>
+
+      <div class="trouble-item fade-in">
+        <div class="trouble-problem">Errore "Missing Permissions"</div>
+        <div class="trouble-solution">Aggiungi i permessi Manage Channels, Manage Roles e Send Messages al bot.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>Timezone: <strong>Europe/Rome</strong></p>
+      <p style="margin-top: 8px; opacity: 0.7;">
+        <a href="https://github.com/ChristianPulieri/discord-channel-scheduler" target="_blank">GitHub Repository</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Create ember particles
+    const emberField = document.getElementById('emberField');
+    const particleCount = 25;
+
+    for (let i = 0; i < particleCount; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'ember-particle';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.bottom = '-10px';
+      particle.style.animationDelay = Math.random() * 8 + 's';
+      particle.style.animationDuration = (6 + Math.random() * 4) + 's';
+      emberField.appendChild(particle);
+    }
+
+    // Fade in on scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
